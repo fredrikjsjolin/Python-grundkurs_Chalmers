@@ -1,0 +1,78 @@
+# Jag bekräftar härmed att jag inte kommunicerar med andra personer än kursens lärare
+# under tentans gång.
+# Jag är medveten om att fusk i tentan kan leda till disciplinåtgärder.
+# Jag har använt ChatGPT (i vissa specifika fall) och förklarar i mitt svar på Extrafråga hur jag har gjort.
+
+# Fråga 1
+
+def swenoun(noun):
+
+    input_list = noun.split()
+
+    if noun[-1] == "a":
+    
+        a_list = [noun, noun + "n", noun[:-1] + "or", noun[:-1] + "orna"]
+        
+        return a_list
+    
+    elif noun[-3:] == "ion":
+
+        ion_list = [noun, noun + "en", noun + "er", noun + "erna"]
+            
+        return ion_list
+    
+    elif noun[-3:] == "are":
+
+        are_list = [noun, noun + "n", noun, noun[:-1] + "na"]
+
+        return are_list
+
+    elif noun[-1] == "e":
+
+        e_list = [noun, noun + "t", noun + "n", noun + "na"]
+
+        return e_list
+    
+    else:
+
+        other_list = [noun, noun + "en", noun + "ar", noun + "arna"]
+
+        return other_list
+
+# print(swenoun("apa"))
+
+# Fråga 2
+
+def test(input):
+
+    input_list = input.split()
+
+    for element in input_list:
+        
+        string = ", ".join(swenoun(element))
+        print(string)
+
+# använder bara ett urval av orden i listan nedan då utskriften blir väldigt lång annars
+def test_file(filename):
+
+    file = open(filename)
+    lines = file.readlines()
+    cleaned_lines = [string.strip() for string in lines]
+    # print(cleaned_lines[:100])
+
+    for element in cleaned_lines[:100]:
+        string = ", ".join(swenoun(element))
+        print(string)
+
+
+input = input("ange substantiv: ")
+test(input)
+test_file("/Users/fredriksjolin/Documents/Python/Python for AI_ITHS/Python grundkurs/Ex tentor/swenouns.txt")
+    
+# Abborre, pojke, brev, mor, far verkar böjas fel 
+
+# Extrafråga - jag har använt ChatGPT i följande fall:
+# - för att slicea noun[-3:]
+# - string = ", ".join(swenoun(element)) - fick utskrift av listan annars inkl klamrar
+# - cleaned_lines = [string.strip() for string in lines] för att rensa från radbrytningstecken
+# Strukturen på programmet, logiken och övriga fall har jag gjort själv
