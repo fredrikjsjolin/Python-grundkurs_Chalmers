@@ -1,0 +1,84 @@
+# Skapa ett antal funktioner som hanterar olika matrisoperationer
+
+def transpose(matrix):
+    # flippa kolumner och rader i en matris
+
+    if matrix == []:
+        return []
+
+    num_rows = len(matrix)
+    num_cols = len(matrix[0]) # fixa om man skickar in två tomma listor 
+    
+    flipped_matrix = [[0] * num_rows for _ in range(num_cols)]
+    
+    for i in range(num_rows):
+        for j in range(num_cols):
+            flipped_matrix[j][i] = matrix[i][j]
+    
+    return flipped_matrix
+    
+def powers(list, num1, num2):
+    # skapa en matris utifrån en lista
+    num_numbers = len(list)
+    power_range = num2 - num1 + 1
+    
+    power_matrix = [[0] * power_range for _ in range(num_numbers)]
+    
+    for i in range(num_numbers):
+        current_number = list[i]
+        for j in range(num1, num2 + 1):
+            power_matrix[i][j - num1] = current_number ** j
+    
+    return power_matrix
+    
+
+def matmul(matrix1, matrix2):
+    # multiplicera två matriser med varandra
+    result = [[0] * len(matrix2[0]) for _ in range(len(matrix1))]
+    
+    for i in range(len(matrix1)):
+        for j in range(len(matrix2[0])):
+            for k in range(len(matrix2)):
+                result[i][j] += matrix1[i][k] * matrix2[k][j]
+    
+    return result
+
+
+def invert(matrix):
+    # invertera en matris
+    a = matrix[0][0]
+    b = matrix[0][1]
+    c = matrix[1][0]
+    d = matrix[1][1]
+    
+    determinant = a * d - b * c
+    
+    if determinant == 0:
+        return None  
+    
+    inverted_matrix = [
+        [d / determinant, -b / determinant],
+        [-c / determinant, a / determinant]
+    ]
+    
+    return inverted_matrix
+
+def loadtxt(file_name):
+    # tar emot en fil med rader av nummer
+    matrix = []
+    
+    with open(file_name, 'r') as file:
+        for line in file:
+            numbers = line.strip().split('\t')
+            numbers = [float(num) for num in numbers]  
+            matrix.append(numbers)
+    
+    return matrix
+
+
+# transpose([[],[],[]])
+# A = [[1,2],[3,4]]
+# print(matmul(A, invert(A)))
+
+#file_name = "chirps.txt"
+#print(loadtxt(file_name))
