@@ -1,0 +1,55 @@
+def tokenize(lines):
+    words = []
+    for line in lines:
+        start = 0
+        while start < len(line):
+            while start < len(line) and line[start].isspace():
+                start = start+1
+            
+            if start < len(line) and line[start].isalpha():
+                end = start
+                while end < len(line) and line[end].isalpha():
+                    end = end+1
+                words.append(line[start:end].lower())
+                start = end
+            
+            elif start < len(line) and line[start].isdigit():
+                end = start
+                while end < len(line) and line[end].isdigit():
+                    end = end+1
+                words.append(line[start:end]) 
+                start = end
+            
+            elif start < len(line):
+                words.append(line[start])
+                start = start+1
+     
+    return words
+    
+
+def countWords(words, stopWords): 
+    cleaned_stopWords = [stopword.strip() for stopword in stopWords]
+    dict = {}
+    for word in words:
+        if word.lower() in cleaned_stopWords:
+            continue
+        if word in dict:
+            dict[word] += 1
+        else:
+            dict[word] = 1
+    
+    return dict
+
+def printTopMost(dict, n): 
+    for i, (word,freq) in enumerate(sorted(dict.items(), key=lambda item: item[1], reverse=True)):
+        if i < n:
+            print(word.ljust(20)+str(freq).rjust(5)) 
+        else:
+            break
+    
+
+#print(tokenize(["10  Sweet apple pie. "]))
+
+#print(countWords(["apple", "banana", "orange", "apple", "apple", "banana", "grape"], ["banana", "grape"]))
+
+#printTopMost({'text': 9, 'word': 30, 'fiction': 6, 'count': 11, 'counting': 7, 'novel': 6},3)
