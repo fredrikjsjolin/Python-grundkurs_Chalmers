@@ -1,0 +1,31 @@
+from matrix import *
+import sys
+import matplotlib.pyplot as plt
+
+# läsa in en fil i funktionen loadtxt
+# använda formeln i lab3 instruktionen
+# printa med plt.show och plt.plot
+
+# data = loadtxt("/Users/fredriksjolin/Documents/Python/Python for AI_ITHS/Python grundkurs/lab3/chirps.txt")
+
+data = open(sys.argv[1])
+
+X = transpose(data)[0]
+Y = transpose(data)[1]
+
+Xp  = powers(X,0,1)
+Yp  = powers(Y,1,1)
+Xpt = transpose(Xp)
+
+[[b],[m]] = matmul(invert(matmul(Xpt,Xp)),matmul(Xpt,Yp)) 
+
+result = []       
+
+for element in X:
+    result.append(element * m + b)
+
+Y2 = result 
+
+plt.plot(X,Y,'ro')
+plt.plot(X, Y2)
+plt.show()
