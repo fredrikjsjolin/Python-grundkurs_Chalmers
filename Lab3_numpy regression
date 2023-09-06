@@ -1,0 +1,54 @@
+from numpy import *
+import sys
+import matplotlib.pyplot as plt
+
+def powers(list, num1, num2):
+    # skapa en matris utifrån en lista
+    num_numbers = len(list)
+    power_range = num2 - num1 + 1
+    
+    power_matrix = [[0] * power_range for _ in range(num_numbers)]
+    
+    for i in range(num_numbers):
+        current_number = list[i]
+        for j in range(num1, num2 + 1):
+            power_matrix[i][j - num1] = current_number ** j
+    
+    return array(power_matrix) 
+
+# data = loadtxt("/Users/fredriksjolin/Documents/Python/Python for AI_ITHS/Python grundkurs/lab3/chirps-modified.txt")
+
+data = open(sys.argv[1])
+n = sys.argv[2] 
+
+X = transpose(data)[0]
+Y = transpose(data)[1] 
+
+Xp  = powers(X,0,n) # n fås som input 
+Yp  = powers(Y,1,1)
+Xpt = Xp.transpose()
+
+a = matmul(linalg.inv(matmul(Xpt,Xp)),matmul(Xpt,Yp))
+a = a[:,0]
+
+def poly(a,x): # x is the value of the polynomial, y = a[0[] + a[1]*x + a[2]*x**2...
+    
+    y = 0
+    for i in range (n + 1):
+        y += a[i] * (x ** (i))
+    
+    return y
+
+Y2 = [] # Y2 räknas ut med funktionen nedan
+
+#for x in X:
+    #Y2.append(poly(a, x))   
+
+X2 = linspace(0,100,500).tolist()
+
+for x in X2:
+    Y2.append(poly(a, x)) 
+
+plt.plot(X,Y,'ro')
+plt.plot(X2, Y2)
+plt.show()
