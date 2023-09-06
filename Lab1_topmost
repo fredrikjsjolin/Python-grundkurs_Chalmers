@@ -1,0 +1,24 @@
+import wordfreq
+import sys
+
+
+def main():
+    stopWords = open(sys.argv[1])
+    # stopWords.close()
+
+    lines = open(sys.argv[2])
+    # lines.close()
+
+    n = sys.argv[3]
+
+    wordfreq.printTopmost(wordfreq.countWords(wordfreq.tokenize(lines), stopWords), n)
+
+main()
+
+#lines = open("examples/article2.txt")
+
+#ordlista = wordfreq.tokenize(lines)
+#print(ordlista)
+
+#topplista = wordfreq.printTopMost(wordfreq.countWords(ordlista, ["."]), 5)
+#print(topplista)
